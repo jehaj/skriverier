@@ -5,4 +5,4 @@ Jeg vil stræbe efter at skriverierne er tilgængelige på både dansk og engels
 
 Strukturen af dette repositorium er sat op til at følge strukturen nødvendig for Zola. Det er en Static Site Generator (SSG) (generator til statiske sider -- her har jeg allerede fejlet) meget magen til Hugo og Jekyll.
 
-Skriverierne bliver derfor tilføjet under content/blog/, hvor der til være en dansk udgave `skriveri.md` og en engelsk udgave `skriveri.en.md`.
+Skriverierne bliver derfor tilføjet under content/blog/, hvor der til hvert skriveri vil være en dansk udgave `skriveri.md` og en engelsk udgave `skriveri.en.md`.
