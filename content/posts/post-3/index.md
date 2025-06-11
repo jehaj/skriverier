@@ -10,3 +10,5 @@ Occaecat aliqua consequat laborum ut ex aute aliqua culpa quis irure esse magna 
 ![Bryce Canyon National Park](bryce-canyon.jpg)
 
 Sit excepteur do velit veniam mollit in nostrud laboris incididunt ea. Amet eu cillum ut reprehenderit culpa aliquip labore laborum amet sit sit duis. Laborum id proident nostrud dolore laborum reprehenderit quis mollit nulla amet veniam officia id id. Aliquip in deserunt qui magna duis qui pariatur officia sunt deserunt.
+
+$$ a^2 + b^2 = c^2. $$
