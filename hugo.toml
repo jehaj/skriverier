@@ -1,6 +1,16 @@
 baseURL = 'https://skriverier.jehaj.dk/'
 languageCode = 'da-DK'
 title = 'Mine Skriverier'
+defaultContentLanguage = 'dk'
+
+[languages]
+  [languages.dk]
+    languageCode = 'da-DK'
+    languageName = 'Dansk'
+  [languages.en]
+    languageCode = 'en-GB'
+    languageName = 'English'
+  
 
 [[menus.main]]
 name = 'Hjem'
@@ -11,11 +21,6 @@ weight = 10
 name = 'Indlæg'
 pageRef = '/posts'
 weight = 20
-
-[[menus.main]]
-name = 'Tags'
-pageRef = '/tags'
-weight = 30
 
 [module]
   [module.hugoVersion]
