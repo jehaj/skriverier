@@ -2,7 +2,8 @@ body {
   color: #222;
   font-family: Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
   line-height: 1.5;
-  margin: 1rem;
+  padding: 1rem;
+  margin: 0 auto;
   max-width: 768px;
 }
 

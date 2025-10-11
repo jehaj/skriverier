@@ -1,6 +1,6 @@
 +++
-title = 'Posts'
-date = 2023-01-01T08:30:00-07:00
+title = 'Alle indlæg'
+date = 2025-10-11
 draft = false
 +++
 

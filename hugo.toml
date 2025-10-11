@@ -30,3 +30,5 @@ weight = 30
         [markup.goldmark.extensions.passthrough.delimiters]
           block = [['\[', '\]'], ['$$', '$$']]
           inline = [['\(', '\)']]
+  [markup.highlight]
+    style = 'github'
