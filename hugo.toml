@@ -1,17 +1,17 @@
 baseURL = 'https://skriverier.jehaj.dk/'
 languageCode = 'da-DK'
 title = 'Mine Skriverier'
-defaultContentLanguage = 'dk'
+defaultContentLanguage = 'da'
 
 [languages]
-  [languages.dk]
+  [languages.da]
     languageCode = 'da-DK'
     languageName = 'Dansk'
-    [[languages.dk.menu.main]]
+    [[languages.da.menu.main]]
       name = 'Hjem'
       pageRef = '/'
       weight = 10
-    [[languages.dk.menu.main]]
+    [[languages.da.menu.main]]
       name = 'Indlæg'
       pageRef = '/posts'
       weight = 20

@@ -4,7 +4,7 @@ This project is a personal blog built with the Hugo Static Site Generator.
 
 ## Architecture & Structure
 - **Content**: Located in [content/posts/](content/posts/).
-- **Multilingual**: Supports Danish (`dk`) and English (`en`).
+- **Multilingual**: Supports Danish (`da`) and English (`en`).
     - Danish (default): `filename.md`
     - English: `filename.en.md`
 - **Layouts**: Custom HTML templates in [layouts/](layouts/).
