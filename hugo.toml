@@ -7,25 +7,26 @@ defaultContentLanguage = 'dk'
   [languages.dk]
     languageCode = 'da-DK'
     languageName = 'Dansk'
+    [[languages.dk.menu.main]]
+      name = 'Hjem'
+      pageRef = '/'
+      weight = 10
+    [[languages.dk.menu.main]]
+      name = 'Indlæg'
+      pageRef = '/posts'
+      weight = 20
   [languages.en]
     languageCode = 'en-GB'
     languageName = 'English'
+    [[languages.en.menu.main]]
+      name = 'Home'
+      pageRef = '/'
+      weight = 10
+    [[languages.en.menu.main]]
+      name = 'Posts'
+      pageRef = '/posts'
+      weight = 20
   
-
-[[menus.main]]
-name = 'Hjem'
-pageRef = '/'
-weight = 10
-
-[[menus.main]]
-name = 'Indlæg'
-pageRef = '/posts'
-weight = 20
-
-[module]
-  [module.hugoVersion]
-    extended = false
-    min = "0.116.0"
 
 [markup]
   [markup.goldmark]
