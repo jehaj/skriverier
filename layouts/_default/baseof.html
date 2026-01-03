@@ -10,7 +10,19 @@
   <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
   {{- end }}
   {{- $noop := .Content }}
-  {{- if .Page.Store.Get "hasMath" }}
+  {{- $hasMath := .Store.Get "hasMath" }}
+  {{- if not $hasMath }}
+  {{- $pages := .Pages }}
+  {{- if .IsHome }}{{ $pages = site.RegularPages }}{{ end }}
+  {{- range $pages }}
+  {{- $noop := .Summary }}
+  {{- if .Store.Get "hasMath" }}
+  {{- $hasMath = true }}
+  {{- break }}
+  {{- end }}
+  {{- end }}
+  {{- end }}
+  {{- if $hasMath }}
   {{- with resources.Get "css/katex.min.css" }}
   <link rel="stylesheet" href="{{ .RelPermalink }}">
   {{- end }}
