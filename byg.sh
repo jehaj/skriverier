@@ -9,8 +9,11 @@ cd $PROJECT_DIR || exit
 git pull origin main
 
 /usr/bin/podman run --rm \
-    -v "$PROJECT_DIR":/src:Z \
+    -v "$PROJECT_DIR":/project:Z \
+    --userns=keep-id \
     ghcr.io/gohugoio/hugo:latest \
-    --cleanDestinationDir
++    --cleanDestinationDir \
++    --noChmod \
++    --noTimes
 
 echo "Hugo build færdig: $(date)"
