@@ -1,3 +1,6 @@
 public/
 katex.min.css
 fonts/
+
+byg.service
+byg.timer
