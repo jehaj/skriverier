@@ -1,0 +1,40 @@
+baseURL = 'https://skriverier.jehaj.dk/'
+languageCode = 'da-DK'
+title = 'Mine Skriverier'
+defaultContentLanguage = 'da'
+
+[languages]
+  [languages.da]
+    languageCode = 'da-DK'
+    languageName = 'Dansk'
+    [[languages.da.menu.main]]
+      name = 'Hjem'
+      pageRef = '/'
+      weight = 10
+    [[languages.da.menu.main]]
+      name = 'Indlæg'
+      pageRef = '/posts'
+      weight = 20
+  [languages.en]
+    languageCode = 'en-GB'
+    languageName = 'English'
+    [[languages.en.menu.main]]
+      name = 'Home'
+      pageRef = '/'
+      weight = 10
+    [[languages.en.menu.main]]
+      name = 'Posts'
+      pageRef = '/posts'
+      weight = 20
+  
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)']]
+  [markup.highlight]
+    style = 'github'
