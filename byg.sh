@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROJECT_DIR="/home/prime/services/skriverier"
+PROJECT_DIR=$(dirname "$(realpath $0)")
 
 # 1. Gå til projektmappen
 cd $PROJECT_DIR || exit
