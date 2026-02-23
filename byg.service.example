@@ -1,5 +1,5 @@
 [Unit]
 Description=Byg skriverier med hugo
 [Service]
-ExecStart=/home/prime/services/skriverier/byg.sh
+ExecStart=<stien til byg.sh>
 Type=oneshot

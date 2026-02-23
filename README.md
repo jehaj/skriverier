@@ -25,6 +25,22 @@ rm -rf katex
 sed -i 's/url(fonts\//url(..\/fonts\//g' assets/css/katex.min.css
 ```
 
+If you use systemd, then you can set up a timer to automatically run the `byg.sh` script at regular intervals. Examples of the service and timer files can be found in this repository. You can link them to your user systemd directory with:
+
+
+```bash
+systemctl --user link ~/home/<user>/Projects/skriverier/byg.service
+systemctl --user link ~/home/<user>/Projects/skriverier/byg.timer
+```
+
+It is important that it is an absolute path, otherwise it will not work. You can check the status of the timer with:
+
+```bash
+systemctl --user start byg.timer
+systemctl --user status byg.timer
+```
+
 ## Inspiration
 
 - https://www.saxrag.com/tech/reversing/2025/06/01/BAWiFi.html
+[text](byg.timer)
