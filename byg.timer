@@ -1,7 +1,7 @@
 [Unit]
 Description=Byg skriverier med hugo
 [Timer]
-OnCalendar=*-*-* 03:00:00                # Runs daily at midnight
-Persistent=true                          # Runs missed jobs on boot
+OnCalendar=*-*-* 03:00:00
+Persistent=true
 [Install]
 WantedBy=timers.target
