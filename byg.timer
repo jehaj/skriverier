@@ -1,0 +1,7 @@
+[Unit]
+Description=Byg skriverier med hugo
+[Timer]
+OnCalendar=*-*-* 03:00:00                # Runs daily at midnight
+Persistent=true                          # Runs missed jobs on boot
+[Install]
+WantedBy=timers.target

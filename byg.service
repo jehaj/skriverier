@@ -1,0 +1,5 @@
+[Unit]
+Description=Byg skriverier med hugo
+[Service]
+ExecStart=/usr/local/bin/byg.sh
+Type=oneshot
