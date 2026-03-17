@@ -30,6 +30,8 @@ defaultContentLanguage = 'da'
 
 [markup]
   [markup.goldmark]
+    [markup.goldmark.parser]
+      wrapStandAloneImageWithinParagraph = false
     [markup.goldmark.extensions]
       [markup.goldmark.extensions.passthrough]
         enable = true

@@ -1,23 +1,237 @@
-body {
-  color: #222;
-  font-family: Iowan Old Style, Apple Garamond, Baskerville, Times New Roman, Droid Serif, Times, Source Serif Pro, serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
-  line-height: 1.5;
-  padding: 1rem;
-  margin: 0 auto;
-  max-width: 768px;
+:root {
+  --bg: #f8f6f1;
+  --surface: #fffdf8;
+  --text: #1f1d1a;
+  --muted: #5f5a52;
+  --border: #d7d1c7;
+  --link: #0059b8;
+  --focus: #0b57d0;
+  --measure: 70ch;
 }
 
-header {
-  border-bottom: 1px solid #222;
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top right, #f3ead8 0%, rgba(243, 234, 216, 0) 45%),
+    var(--bg);
+  font-family: "Libertinus Serif", "Charter", "Bitstream Charter", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  line-height: 1.65;
+}
+
+.site-header,
+main,
+.site-footer {
+  width: min(100% - 2rem, var(--measure));
+  margin-inline: auto;
+}
+
+.site-header {
+  padding-top: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.site-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.site-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nav-list,
+.language-list,
+.post-list,
+.tag-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list,
+.language-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0.75rem 0;
+}
+
+.language-list {
+  margin-top: 0;
+  font-size: 0.95rem;
+}
+
+main {
+  padding-block: 1.25rem;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  letter-spacing: 0.01em;
+}
+
+h1 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin-top: 0.2em;
+}
+
+h2 {
+  font-size: clamp(1.2rem, 3vw, 1.4rem);
+}
+
+p,
+ul,
+ol,
+pre,
+blockquote {
+  margin-top: 0;
   margin-bottom: 1rem;
 }
 
-footer {
-  border-top: 1px solid #222;
-  margin-top: 1rem;
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
 }
 
-a {
-  color: #00e;
-  text-decoration: none;
+a[aria-current="page"] {
+  color: var(--text);
+  font-weight: 700;
+}
+
+a:focus-visible,
+.skip-link:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 0.1rem;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: -10rem;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  z-index: 10;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+.content-block > :last-child,
+.post-summary > :last-child {
+  margin-bottom: 0;
+}
+
+.post-list {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.post-list li {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.2rem;
+  padding: 0.9rem 1rem;
+}
+
+.post-list h2 {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+
+.post-subtitle {
+  color: var(--muted);
+  font-size: 1.02rem;
+  font-style: italic;
+  margin-bottom: 0.5rem;
+}
+
+.post-meta {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.8rem;
+}
+
+code,
+pre {
+  font-family: "Iosevka", "Fira Code", "DejaVu Sans Mono", monospace;
+  font-size: 0.95em;
+}
+
+pre {
+  background: #f1eee7;
+  border: 1px solid var(--border);
+  border-radius: 0.2rem;
+  padding: 0.75rem;
+  overflow-x: auto;
+}
+
+blockquote {
+  border-left: 4px solid var(--border);
+  margin-left: 0;
+  padding-left: 0.9rem;
+  color: var(--muted);
+}
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  margin-top: 2rem;
+  padding: 1rem 0 2rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+figure {
+  margin: 1.25rem 0;
+}
+
+figure img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+}
+
+figcaption {
+  margin-top: 0.5rem;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 42rem) {
+  body {
+    line-height: 1.6;
+  }
+
+  .site-header,
+  main,
+  .site-footer {
+    width: min(100% - 1.25rem, var(--measure));
+  }
 }

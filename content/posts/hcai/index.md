@@ -6,9 +6,7 @@ updated = 2026-03-18T16:15:00+01:00
 draft = true
 +++
 
-{{ $bigimage := .Resources.Get "YutongLiu-DigitDigitalNomads Across Time-2560x1440.png" }}
-<img src="{{ $bigimage.RelPermalink }}" width="{{ $bigimage.Width }}" height="{{ $bigimage.Height }}" alt="Plurals er en digital mini-offentlighed, hvor forskellige LLM-agenter delibererer gennem tilpassede strukturer.">
-<!-- Billedtekst: Plurals er en digital mini-offentlighed, hvor forskellige LLM-agenter delibererer gennem tilpassede strukturer for at undslippe et neutralt ingenmandsblik. (Yutong Liu & Digit / https://betterimagesofai.org / https://creativecommons.org/licenses/by/4.0/) -->
+![Plurals er en digital mini-offentlighed, hvor forskellige LLM-agenter delibererer gennem tilpassede strukturer.](YutongLiu-DigitDigitalNomads%20Across%20Time-2560x1440.png "Plurals er en digital mini-offentlighed, hvor forskellige LLM-agenter delibererer gennem tilpassede strukturer for at undslippe et neutralt ingenmandsblik. Kilde: Yutong Liu & Digit, betterimagesofai.org, CC BY 4.0")
 
 Forestil dig, at du vil sende en e-mail til alle dine kollegaer på arbejdet og sender dit udkast til ChatGPT for at få feedback. Den giver sandsynligvis et høfligt og neutralt svar, noget man kunne kalde et ingenmandsblik. Men der er et problem. Mennesker er sjældent neutrale. Vi er forskellige i vores værdier, livserfaringer og bekymringer, og et neutralt LLM-svar kan have svært ved at mægle mellem de forskelle.
 
@@ -19,9 +17,7 @@ Som nævnt arbejder Plurals med forskellige personaer. En måde at skabe dem på
 I en test fandt forskerne, at brugen af disse dybe personaer reducerede outputkollaps, altså tendensen til at LLM'er leverer de samme, konsistente og sikre svar igen og igen. Når agenterne fik en detaljeret baggrund, blev outputtet langt mere varieret og repræsentativt.
 
 
-{{ $image := .Resources.Get "plurals_structures.png" }}
-<img src="{{ $image.RelPermalink }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="Strukturerne i Plurals: Chain, Graph, Debate og Ensemble.">
-Strukturerne implementeret i Plurals. (Ashkinaze et al. 2025) <!-- Burde være en billedtekst til figuren -->
+![Strukturerne i Plurals: Chain, Graph, Debate og Ensemble.](plurals_structures.png "Strukturerne implementeret i Plurals. (Ashkinaze et al. 2025)")
 
 Plurals er mere end bare agenter og deres personaer. Systemet giver mulighed for forskellige former for deliberation mellem agenterne, kaldet Structures. Der er implementeret en række strukturer, men systemets modularitet gør det muligt at implementere nye, hvis man har den tekniske kunnen. I chain-strukturen ses agenterne som led i en kæde, hvor deliberationen bevæger sig sekventielt gennem leddene med mulighed for at randomisere rækkefølgen mellem runder.
 

@@ -1,0 +1,27 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ with .Summary }}{{ . | plainify | truncate 160 }}{{ else }}{{ site.Title }}{{ end }}{{ end }}">
+<link rel="icon" href="/favicon.ico">
+{{- with resources.Get "css/main.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+{{- end }}
+
+{{- $noop := .Content }}
+{{- $hasMath := .Store.Get "hasMath" }}
+{{- if not $hasMath }}
+  {{ $pages := .Pages }}
+  {{ if .IsHome }}{{ $pages = site.RegularPages }}{{ end }}
+  {{ range $pages }}
+    {{ $noop := .Summary }}
+    {{ if .Store.Get "hasMath" }}
+      {{ $hasMath = true }}
+      {{ break }}
+    {{ end }}
+  {{ end }}
+{{- end }}
+{{- if $hasMath }}
+  {{- with resources.Get "css/katex.min.css" }}
+<link rel="stylesheet" href="{{ .RelPermalink }}">
+  {{- end }}
+{{- end }}

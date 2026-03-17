@@ -1,0 +1,32 @@
+{{- $alt := .PlainText -}}
+{{- $caption := .Title -}}
+{{- $srcInput := .Destination -}}
+{{- $src := replace $srcInput "%20" " " -}}
+{{- $res := .Page.Resources.GetMatch $src -}}
+{{- if and (not $res) .Page.IsTranslated -}}
+  {{- range .Page.AllTranslations -}}
+    {{- $candidate := .Resources.GetMatch $src -}}
+    {{- if $candidate -}}
+      {{- $res = $candidate -}}
+      {{- break -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{ if $res }}
+<figure>
+  <img src="{{ $res.RelPermalink }}" width="{{ $res.Width }}" height="{{ $res.Height }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+  {{ with $caption }}
+  <figcaption>{{ . }}</figcaption>
+  {{ end }}
+</figure>
+{{ else if or (hasPrefix $srcInput "http://") (hasPrefix $srcInput "https://") (hasPrefix $srcInput "/") }}
+<figure>
+  <img src="{{ $srcInput | safeURL }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+  {{ with $caption }}
+  <figcaption>{{ . }}</figcaption>
+  {{ end }}
+</figure>
+{{ else }}
+{{ warnf "Image resource not found for %q on page %q" $srcInput .Page.File.Path }}
+{{ end }}

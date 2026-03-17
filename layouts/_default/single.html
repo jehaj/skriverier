@@ -1,15 +1,29 @@
 {{ define "main" }}
-<h1>{{ .Title }}</h1>
+<article>
+  <header>
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.subtitle }}
+    <p class="post-subtitle">{{ . }}</p>
+    {{ end }}
+    <p class="post-meta">
+      {{ i18n "published_on" }}:
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_long" }}</time>
+    </p>
+  </header>
 
-<time datetime="{{ .Date.Format " 2006-01-02" }}">{{ .Date | time.Format ":date_long" }}</time>
+  <div class="content-block">
+    {{ .Content }}
+  </div>
 
-{{ .Content }}
-
-{{- with .GetTerms "tags" }}
-<p>Tags:
-  {{- range . }}
-  <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-  {{- end }}
-</p>
-{{- end }}
+  {{ with .GetTerms "tags" }}
+  <section class="post-tags" aria-label="{{ i18n "tags" }}">
+    <h2>{{ i18n "tags" }}</h2>
+    <ul class="tag-list">
+      {{ range . }}
+      <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+      {{ end }}
+    </ul>
+  </section>
+  {{ end }}
+</article>
 {{ end }}

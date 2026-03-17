@@ -6,9 +6,7 @@ updated = 2026-03-18T16:15:00+01:00
 draft = true
 +++
 
-{{ $bigimage := .Resources.Get "YutongLiu-DigitDigitalNomads Across Time-2560x1440.png" }}
-<img src="{{ $image.RelPermalink }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="The Plurals Structures: Chain, Graph, Debate, and Ensemble.">
-<!-- Caption: Plurals is a digital mini-public where diverse LLM agents deliberate through custom structures to escape the view from nowhere. (Yutong Liu & Digit / https://betterimagesofai.org / https://creativecommons.org/licenses/by/4.0/) -->
+![Plurals is a digital mini-public where diverse LLM agents deliberate through custom structures.](YutongLiu-DigitDigitalNomads%20Across%20Time-2560x1440.png "Plurals is a digital mini-public where diverse LLM agents deliberate through custom structures to escape the view from nowhere. Source: Yutong Liu & Digit, betterimagesofai.org, CC BY 4.0")
 
 Imagine you want to send an e-mail to all your colleagues at work and send your draft to ChatGPT for a review. It probably provides a polite and neutral response, what might be called a view from nowhere. But there is a problem. Humans are rarely neutral. We differ in our values, life experiences, and concerns, and a neutral LLM response might fail to mediate those differences.
 
@@ -19,9 +17,7 @@ As mentioned Plurals has different personas. One way of getting these is by usin
 In one test, the researchers found that using these deep personas reduced output collapse, which is the tendency of LLMs to provide the same consistent and safe answers. Giving the agents a deep and detailed background resulted in the outputs that were far more diverse and representative.
 
 
-{{ $image := .Resources.Get "plurals_structures.png" }}
-<img src="{{ $image.RelPermalink }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="The Plurals Structures: Chain, Graph, Debate, and Ensemble.">
-The Structures implemented in Plurals. (Ashkinaze et al. 2025) <!-- Should be a caption for the figure -->
+![The Plurals Structures: Chain, Graph, Debate, and Ensemble.](plurals_structures.png "The Structures implemented in Plurals. (Ashkinaze et al. 2025)")
 
 Plurals is more than just the agents and their personas. It allows for different kinds of deliberation between the agents (if any) which are called Structures. They have implemented some structures, but the modularity of the system allows for any structure to be implemented given the technical know-how. The chain structure views the agents as links of the chain and the deliberation moves in sequence of these links with the option of randomizing the order of agents between rounds.
 

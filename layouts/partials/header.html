@@ -1,0 +1,30 @@
+<header class="site-header">
+  <div class="site-title-wrap">
+    <p class="site-title"><a href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a></p>
+  </div>
+
+  <nav aria-label="{{ i18n "navigation" }}">
+    <ul class="nav-list">
+      {{ range site.Menus.main }}
+      <li>
+        <a href="{{ .URL }}" {{ if or ($.IsMenuCurrent .Menu .) ($.HasMenuCurrent .Menu .) }}aria-current="page"{{ end }}>{{ .Name }}</a>
+      </li>
+      {{ end }}
+    </ul>
+  </nav>
+
+  {{ if .IsTranslated }}
+  <nav aria-label="{{ i18n "language" }}">
+    <ul class="language-list">
+      <li>
+        <a href="{{ .RelPermalink }}" aria-current="page">{{ .Language.LanguageName }}</a>
+      </li>
+      {{ range .Translations }}
+      <li>
+        <a href="{{ .RelPermalink }}">{{ .Language.LanguageName }}</a>
+      </li>
+      {{ end }}
+    </ul>
+  </nav>
+  {{ end }}
+</header>
