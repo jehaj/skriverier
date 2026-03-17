@@ -12,8 +12,8 @@ git pull origin main
     -v "$PROJECT_DIR":/project:Z \
     --userns=keep-id \
     ghcr.io/gohugoio/hugo:latest \
-+    --cleanDestinationDir \
-+    --noChmod \
-+    --noTimes
+    --cleanDestinationDir \
+    --noChmod \
+    --noTimes
 
 echo "Hugo build færdig: $(date)"
