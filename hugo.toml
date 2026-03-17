@@ -1,4 +1,4 @@
-baseURL = 'https://skriverier.jehaj.dk/'
+baseURL = 'https://jehaj.dk/'
 languageCode = 'da-DK'
 title = 'Mine Skriverier'
 defaultContentLanguage = 'da'
