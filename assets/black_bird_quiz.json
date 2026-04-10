@@ -1,0 +1,10 @@
+{
+    "raven": [
+        "https://example.com/images/raven1.jpg",
+        "https://example.com/images/raven2.jpg"
+    ],
+    "crow": [
+        "https://example.com/images/crow1.jpg",
+        "https://example.com/images/crow2.jpg"
+    ]
+}

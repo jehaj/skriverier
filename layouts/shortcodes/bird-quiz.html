@@ -1,0 +1,141 @@
+{{- $src := .Get "src" | default "black_bird_quiz.json" -}}
+{{- $resource := resources.Get $src -}}
+
+{{- if not $resource -}}
+<p>Quiz-data kunne ikke findes: <code>{{ $src }}</code>.</p>
+{{- else -}}
+  {{- $quizData := $resource | transform.Unmarshal -}}
+  {{- $pageID := .Page.File.UniqueID | default (md5 .Page.RelPermalink) -}}
+  {{- $id := printf "bird-quiz-%s-%d" $pageID .Ordinal -}}
+  <section id="{{ $id }}" class="bird-quiz" aria-label="Fuglequiz">
+    <h3>Quiz: Hvilken fugl er det?</h3>
+    <p class="bird-quiz__intro">Vaelg det navn, der passer til billedet.</p>
+    <div class="bird-quiz__question" hidden>
+      <img class="bird-quiz__image" src="" alt="Billede til quiz" loading="lazy">
+      <div class="bird-quiz__options"></div>
+      <p class="bird-quiz__feedback" aria-live="polite"></p>
+      <p class="bird-quiz__progress"></p>
+    </div>
+    <p class="bird-quiz__result"></p>
+    <button type="button" class="bird-quiz__restart">Start quiz</button>
+    <script type="application/json" class="js-bird-quiz-data">{{ $quizData | jsonify }}</script>
+  </section>
+  <script>
+  (() => {
+    const root = document.getElementById("{{ $id }}");
+    if (!root) return;
+
+    const dataNode = root.querySelector(".js-bird-quiz-data");
+    const question = root.querySelector(".bird-quiz__question");
+    const image = root.querySelector(".bird-quiz__image");
+    const options = root.querySelector(".bird-quiz__options");
+    const feedback = root.querySelector(".bird-quiz__feedback");
+    const progress = root.querySelector(".bird-quiz__progress");
+    const result = root.querySelector(".bird-quiz__result");
+    const restart = root.querySelector(".bird-quiz__restart");
+
+    if (!dataNode || !question || !image || !options || !feedback || !progress || !result || !restart) return;
+
+    const shuffle = (arr) => {
+      const copy = arr.slice();
+      for (let i = copy.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    };
+
+    let raw = {};
+    try {
+      raw = JSON.parse(dataNode.textContent || "{}");
+    } catch (_error) {
+      return;
+    }
+
+    const birdNames = Object.keys(raw);
+    const questions = shuffle(
+      birdNames.flatMap((name) => {
+        const images = Array.isArray(raw[name]) ? raw[name] : [];
+        return images
+          .filter((url) => typeof url === "string" && url.length > 0)
+          .map((url) => ({ answer: name, image: url }));
+      })
+    );
+
+    let current = 0;
+    let score = 0;
+
+    const showResult = () => {
+      question.hidden = true;
+      result.textContent = `Faerdig. Du fik ${score} ud af ${questions.length} rigtige.`;
+      restart.textContent = "Proev igen";
+      restart.hidden = false;
+    };
+
+    const answerQuestion = (choice) => {
+      const item = questions[current];
+      const correct = choice === item.answer;
+      if (correct) {
+        score += 1;
+        feedback.textContent = "Korrekt!";
+      } else {
+        feedback.textContent = `Forkert. Det rigtige svar er ${item.answer}.`;
+      }
+
+      options.querySelectorAll("button").forEach((button) => {
+        button.disabled = true;
+      });
+
+      window.setTimeout(() => {
+        current += 1;
+        renderQuestion();
+      }, 700);
+    };
+
+    const renderQuestion = () => {
+      if (questions.length === 0 || birdNames.length === 0) {
+        question.hidden = true;
+        result.textContent = "Quiz-data er tom.";
+        restart.hidden = true;
+        return;
+      }
+
+      if (current >= questions.length) {
+        showResult();
+        return;
+      }
+
+      const item = questions[current];
+      const choices = shuffle(birdNames);
+
+      question.hidden = false;
+      restart.hidden = true;
+      image.src = item.image;
+      feedback.textContent = "";
+      progress.textContent = `Spoergsmaal ${current + 1} af ${questions.length}`;
+
+      options.innerHTML = "";
+      choices.forEach((choice) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = choice;
+        button.className = "bird-quiz__option";
+        button.addEventListener("click", () => answerQuestion(choice));
+        options.appendChild(button);
+      });
+    };
+
+    const restartQuiz = () => {
+      current = 0;
+      score = 0;
+      const reshuffled = shuffle(questions);
+      questions.splice(0, questions.length, ...reshuffled);
+      result.textContent = "";
+      renderQuestion();
+    };
+
+    restart.addEventListener("click", restartQuiz);
+    restartQuiz();
+  })();
+  </script>
+{{- end -}}
