@@ -1,3 +1,55 @@
 <footer class="site-footer">
   <p>&copy; {{ now.Format "2006" }} {{ site.Title }}</p>
 </footer>
+
+{{- if .Scratch.Get "hasImageCarousel" -}}
+<script>
+(() => {
+  const initCarousels = () => {
+    document.querySelectorAll(".image-carousel").forEach((root) => {
+      const image = root.querySelector(".image-carousel__image");
+      const status = root.querySelector(".image-carousel__status");
+      const prevButton = root.querySelector('[data-action="prev"]');
+      const nextButton = root.querySelector('[data-action="next"]');
+
+      if (!image || !status || !prevButton || !nextButton) return;
+
+      const imagesData = root.getAttribute("data-images");
+      if (!imagesData) return;
+
+      let images = [];
+      try {
+        images = JSON.parse(imagesData);
+      } catch {
+        return;
+      }
+
+      if (!Array.isArray(images) || images.length === 0) return;
+
+      let index = 0;
+
+      const render = () => {
+        image.src = images[index];
+        status.textContent = `${index + 1} / ${images.length}`;
+      };
+
+      const move = (direction) => {
+        index = (index + direction + images.length) % images.length;
+        render();
+      };
+
+      prevButton.addEventListener("click", () => move(-1));
+      nextButton.addEventListener("click", () => move(1));
+
+      render();
+    });
+  };
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initCarousels);
+  } else {
+    initCarousels();
+  }
+})();
+</script>
+{{- end -}}

@@ -9,7 +9,7 @@
   {{- $id := printf "bird-quiz-%s-%d" $pageID .Ordinal -}}
   <section id="{{ $id }}" class="bird-quiz" aria-label="Fuglequiz">
     <h3>Quiz: Hvilken fugl er det?</h3>
-    <p class="bird-quiz__intro">Vaelg det navn, der passer til billedet.</p>
+    <p class="bird-quiz__intro">Vælg det navn, der passer til billedet.</p>
     <div class="bird-quiz__question" hidden>
       <img class="bird-quiz__image" src="" alt="Billede til quiz" loading="lazy">
       <div class="bird-quiz__options"></div>
@@ -67,7 +67,7 @@
 
     const showResult = () => {
       question.hidden = true;
-      result.textContent = `Faerdig. Du fik ${score} ud af ${questions.length} rigtige.`;
+      result.textContent = `Færdig. Du fik ${score} ud af ${questions.length} rigtige.`;
       restart.textContent = "Proev igen";
       restart.hidden = false;
     };

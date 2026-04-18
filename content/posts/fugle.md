@@ -8,7 +8,7 @@ The following image carousel shows different aspects of a raven.
 
 {{< image-carousel
 	title="Ravn"
-	images="https://example.com/images/raven1.jpg|https://example.com/images/raven2.jpg|https://example.com/images/raven3.jpg"
+	images="https://service.dofbasen.dk/media/image/o/38878838_20260402102922_050825391.jpg|https://service.dofbasen.dk/media/image/o/38654860_20260306064854_921576375.jpg|https://service.dofbasen.dk/media/image/o/38158385_20251210032137_545420504.jpg"
 >}}
 
 The following image carousel shows different aspects of a crow. The important parts to note are ..., which differs from the raven in ... .

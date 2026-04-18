@@ -9,7 +9,8 @@
 {{- if eq (len $images) 0 -}}
 <p>Karussel mangler billeder. Brug parameteren <code>images</code> med URL'er adskilt af <code>|</code>.</p>
 {{- else -}}
-<section id="{{ $id }}" class="image-carousel" aria-label="{{ $title }}">
+{{- .Page.Scratch.Set "hasImageCarousel" true -}}
+<section id="{{ $id }}" class="image-carousel" aria-label="{{ $title }}" data-images="{{ $images | jsonify }}">
   <h3 class="image-carousel__title">{{ $title }}</h3>
   <figure class="image-carousel__figure">
     <img class="image-carousel__image" src="{{ index $images 0 }}" alt="{{ $title }}" loading="lazy">
@@ -17,49 +18,7 @@
   <div class="image-carousel__controls">
     <button type="button" class="image-carousel__button" data-action="prev" {{ if eq (len $images) 1 }}disabled{{ end }}>Forrige</button>
     <span class="image-carousel__status" aria-live="polite">1 / {{ len $images }}</span>
-    <button type="button" class="image-carousel__button" data-action="next" {{ if eq (len $images) 1 }}disabled{{ end }}>Naeste</button>
+    <button type="button" class="image-carousel__button" data-action="next" {{ if eq (len $images) 1 }}disabled{{ end }}>Næste</button>
   </div>
-  <script type="application/json" class="js-carousel-data">{{ $images | jsonify }}</script>
 </section>
-<script>
-(() => {
-  const root = document.getElementById("{{ $id }}");
-  if (!root) return;
-
-  const dataNode = root.querySelector(".js-carousel-data");
-  const image = root.querySelector(".image-carousel__image");
-  const status = root.querySelector(".image-carousel__status");
-  const prevButton = root.querySelector('[data-action="prev"]');
-  const nextButton = root.querySelector('[data-action="next"]');
-
-  if (!dataNode || !image || !status || !prevButton || !nextButton) return;
-
-  let images = [];
-  try {
-    images = JSON.parse(dataNode.textContent || "[]");
-  } catch (_error) {
-    return;
-  }
-
-  images = images.filter((url) => typeof url === "string" && url.length > 0);
-  if (images.length === 0) return;
-
-  let index = 0;
-
-  const render = () => {
-    image.src = images[index];
-    status.textContent = `${index + 1} / ${images.length}`;
-  };
-
-  const move = (direction) => {
-    index = (index + direction + images.length) % images.length;
-    render();
-  };
-
-  prevButton.addEventListener("click", () => move(-1));
-  nextButton.addEventListener("click", () => move(1));
-
-  render();
-})();
-</script>
 {{- end -}}
