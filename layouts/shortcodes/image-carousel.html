@@ -1,24 +1,70 @@
 {{- $pageID := .Page.File.UniqueID | default (md5 .Page.RelPermalink) -}}
 {{- $id := printf "image-carousel-%s-%d" $pageID .Ordinal -}}
 {{- $title := .Get "title" | default "Billedkarussel" -}}
+{{- $attribution := .Get "attribution" -}}
+{{- $photographer := .Get "photographer" -}}
+{{- $copyright := .Get "copyright" -}}
 {{- $images := slice -}}
 {{- with .Get "images" -}}
   {{- $images = split . "|" -}}
 {{- end -}}
 
-{{- if eq (len $images) 0 -}}
+{{- $servedImages := slice -}}
+{{- range $idx, $rawImage := $images -}}
+  {{- $imageURL := trim $rawImage " " -}}
+  {{- if $imageURL -}}
+    {{- if or (hasPrefix $imageURL "http://") (hasPrefix $imageURL "https://") -}}
+      {{- $remote := try (resources.GetRemote $imageURL) -}}
+      {{- if $remote.Err -}}
+        {{- warnf "image-carousel: could not fetch remote image %q on page %q: %s" $imageURL $.Page.RelPermalink $remote.Err -}}
+        {{- $servedImages = $servedImages | append $imageURL -}}
+      {{- else -}}
+        {{- with $remote.Value -}}
+          {{- $processed := try (.Process "webp q80") -}}
+          {{- if $processed.Err -}}
+            {{- warnf "image-carousel: could not process image %q to webp on page %q: %s" $imageURL $.Page.RelPermalink $processed.Err -}}
+            {{- $servedImages = $servedImages | append $imageURL -}}
+          {{- else -}}
+            {{- with $processed.Value -}}
+              {{- $servedImages = $servedImages | append .RelPermalink -}}
+            {{- else -}}
+              {{- $servedImages = $servedImages | append $imageURL -}}
+            {{- end -}}
+          {{- end -}}
+        {{- else -}}
+          {{- $servedImages = $servedImages | append $imageURL -}}
+        {{- end -}}
+      {{- end -}}
+    {{- else -}}
+      {{- $servedImages = $servedImages | append $imageURL -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if eq (len $servedImages) 0 -}}
 <p>Karussel mangler billeder. Brug parameteren <code>images</code> med URL'er adskilt af <code>|</code>.</p>
 {{- else -}}
 {{- .Page.Scratch.Set "hasImageCarousel" true -}}
-<section id="{{ $id }}" class="image-carousel" aria-label="{{ $title }}" data-images="{{ $images | jsonify }}">
+<section id="{{ $id }}" class="image-carousel" aria-label="{{ $title }}" data-images="{{ $servedImages | jsonify }}">
   <h3 class="image-carousel__title">{{ $title }}</h3>
   <figure class="image-carousel__figure">
-    <img class="image-carousel__image" src="{{ index $images 0 }}" alt="{{ $title }}" loading="lazy">
+    <img class="image-carousel__image" src="{{ index $servedImages 0 }}" alt="{{ $title }}" loading="lazy" decoding="async">
+    {{- if or $attribution (or $photographer $copyright) -}}
+    <figcaption class="image-carousel__attribution">
+      {{- if $attribution -}}
+        {{ $attribution }}
+      {{- else -}}
+        {{- if $photographer -}}Foto: {{ $photographer }}{{- end -}}
+        {{- if and $photographer $copyright -}} | {{- end -}}
+        {{- if $copyright -}}Copyright: {{ $copyright }}{{- end -}}
+      {{- end -}}
+    </figcaption>
+    {{- end -}}
   </figure>
   <div class="image-carousel__controls">
-    <button type="button" class="image-carousel__button" data-action="prev" {{ if eq (len $images) 1 }}disabled{{ end }}>Forrige</button>
-    <span class="image-carousel__status" aria-live="polite">1 / {{ len $images }}</span>
-    <button type="button" class="image-carousel__button" data-action="next" {{ if eq (len $images) 1 }}disabled{{ end }}>Næste</button>
+    <button type="button" class="image-carousel__button" data-action="prev" {{ if eq (len $servedImages) 1 }}disabled{{ end }}>Forrige</button>
+    <span class="image-carousel__status" aria-live="polite">1 / {{ len $servedImages }}</span>
+    <button type="button" class="image-carousel__button" data-action="next" {{ if eq (len $servedImages) 1 }}disabled{{ end }}>Næste</button>
   </div>
 </section>
 {{- end -}}
