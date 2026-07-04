@@ -1,4 +1,7 @@
-# Squeaky Ikea JÄRVFJÄLLET
++++
+title = "Squeaky Ikea JÄRVFJÄLLET"
+date = 2026-07-04
++++
 
 This may seem very simple and obvious to many, but I finally got around to stopping my office chair from squeaking when you lean back. A quick internet search led me to this [Reddit post](https://old.reddit.com/r/IKEA/comments/qgxptf/squeaky_and_noisy_j%C3%A4rvfj%C3%A4llet_seat_fixed/). There are some useful tips on Reddit. They describe the following:
 
