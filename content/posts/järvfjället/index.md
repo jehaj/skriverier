@@ -1,4 +1,7 @@
-# Knirkende Ikea JÄRVFJÄLLET
++++
+title = "Knirkende Ikea JÄRVFJÄLLET"
+date = 2026-07-04
++++
 
 Dette virker sikkert meget simpelt og enkelt for mange, men jeg tog mig endelig sammen til at få min kontorstol til at stoppe med at knirke, når man læner sig tilbage. En hurtig søgning på internettet ledte mig til dette [opslag på Reddit](https://old.reddit.com/r/IKEA/comments/qgxptf/squeaky_and_noisy_j%C3%A4rvfj%C3%A4llet_seat_fixed/). Der er alligevel nogle guldkorn på Reddit. De beskriver følgende
 
@@ -19,7 +22,7 @@ Trin 2. Sæt sædeholderen helt frem ved at trække ned i det flade håndtag og 
 
 ![alt text](20260704_125251.jpg)
 
-Trin 3. Smør dem. Test af stolen ikke knirker mere når ryglænet lænes tilbage. Pas dog på, at du ikke vælter stolen eller på anden måde kommer til skade! Jeg var tæt på at være uheldig.
+Trin 3. Smør dem. Test at stolen ikke knirker mere når ryglænet lænes tilbage. Pas dog på, at du ikke vælter stolen eller på anden måde kommer til skade! Jeg var tæt på at være uheldig.
 
 Trin 4. Sæt sædeholderen tilbage. Det gøres igen ved at trække ned i det flade håndtag. Pas på dine fingre, da der er en fjeder som trækker den tilbage.
 
