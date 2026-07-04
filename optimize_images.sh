@@ -7,6 +7,15 @@ cd "$PROJECT_DIR"
 
 echo "Running image optimization..."
 
+# Detect ImageMagick version (ImageMagick 7+ uses "magick", ImageMagick 6 uses standalone commands)
+if command -v magick &>/dev/null; then
+    magick_identify() { magick identify "$@"; }
+    magick_convert() { magick "$@"; }
+else
+    magick_identify() { identify "$@"; }
+    magick_convert() { convert "$@"; }
+fi
+
 # Find all original JPG/PNG images in content/posts/
 # Ignoring any files that are already pre-optimized (ending in -1x or -2x)
 find content/posts/ -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" \) ! -name "*-1x.*" ! -name "*-2x.*" -print0 | while IFS= read -r -d '' img; do
@@ -15,9 +24,9 @@ find content/posts/ -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" 
     ext="${filename##*.}"
     name="${filename%.*}"
 
-    # Get original image width using magick identify
+    # Get original image width using identify
     # If the identify command fails or output is empty, skip this file
-    if ! dimensions=$(magick identify -format "%w %h" "$img" 2>/dev/null); then
+    if ! dimensions=$(magick_identify -format "%w %h" "$img" 2>/dev/null); then
         echo "Warning: Could not identify dimensions for $img. Skipping."
         continue
     fi
@@ -39,7 +48,7 @@ find content/posts/ -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" 
             w1=$width
         fi
         echo "Generating JXL (1x): $jxl_1x (${w1}px)"
-        magick "$img" -resize "${w1}x>" "$jxl_1x"
+        magick_convert "$img" -resize "${w1}x>" "$jxl_1x"
     fi
 
     # 2. Generate 2x JXL if original width > 800
@@ -50,7 +59,7 @@ find content/posts/ -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" 
                 w2=$width
             fi
             echo "Generating JXL (2x): $jxl_2x (${w2}px)"
-            magick "$img" -resize "${w2}x>" "$jxl_2x"
+            magick_convert "$img" -resize "${w2}x>" "$jxl_2x"
         fi
     fi
 done

@@ -16,6 +16,9 @@
 {{- end -}}
 
 {{- if $res -}}
+  {{- if le $res.Width 0 -}}
+    {{- errorf "Image %q on page %q exists but has 0 width (this is likely a Git LFS pointer file that has not been checked out/pulled on this machine)." $srcInput .Page.File.Path -}}
+  {{- end -}}
   {{- $width := $res.Width -}}
   {{- $height := $res.Height -}}
   
