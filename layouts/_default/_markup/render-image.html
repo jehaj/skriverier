@@ -3,30 +3,108 @@
 {{- $srcInput := .Destination -}}
 {{- $src := replace $srcInput "%20" " " -}}
 {{- $res := .Page.Resources.GetMatch $src -}}
+{{- $ownerPage := .Page -}}
 {{- if and (not $res) .Page.IsTranslated -}}
   {{- range .Page.AllTranslations -}}
     {{- $candidate := .Resources.GetMatch $src -}}
     {{- if $candidate -}}
       {{- $res = $candidate -}}
+      {{- $ownerPage = . -}}
       {{- break -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
 
-{{ if $res }}
-<figure>
-  <img src="{{ $res.RelPermalink }}" width="{{ $res.Width }}" height="{{ $res.Height }}" alt="{{ $alt }}" loading="lazy" decoding="async">
-  {{ with $caption }}
-  <figcaption>{{ . }}</figcaption>
-  {{ end }}
-</figure>
-{{ else if or (hasPrefix $srcInput "http://") (hasPrefix $srcInput "https://") (hasPrefix $srcInput "/") }}
-<figure>
-  <img src="{{ $srcInput | safeURL }}" alt="{{ $alt }}" loading="lazy" decoding="async">
-  {{ with $caption }}
-  <figcaption>{{ . }}</figcaption>
-  {{ end }}
-</figure>
-{{ else }}
-{{ warnf "Image resource not found for %q on page %q" $srcInput .Page.File.Path }}
-{{ end }}
+{{- if $res -}}
+  {{- $width := $res.Width -}}
+  {{- $height := $res.Height -}}
+  
+  {{- /* Determine target widths */ -}}
+  {{- $w1 := 800 -}}
+  {{- $w2 := 1600 -}}
+  
+  {{- if lt $width $w1 -}}
+    {{- $w1 = $width -}}
+  {{- end -}}
+  {{- if lt $width $w2 -}}
+    {{- $w2 = $width -}}
+  {{- end -}}
+
+  {{- /* Generate dynamic resources with Hugo */ -}}
+  {{- $avif1x := $res.Resize (printf "%dx avif q85" $w1) -}}
+  {{- $avif2x := "" -}}
+  {{- if gt $w2 $w1 -}}
+    {{- $avif2x = $res.Resize (printf "%dx avif q85" $w2) -}}
+  {{- end -}}
+
+  {{- $webp1x := $res.Resize (printf "%dx webp q85" $w1) -}}
+  {{- $webp2x := "" -}}
+  {{- if gt $w2 $w1 -}}
+    {{- $webp2x = $res.Resize (printf "%dx webp q85" $w2) -}}
+  {{- end -}}
+
+  {{- $fallback1x := $res.Resize (printf "%dx q85" $w1) -}}
+  {{- $fallback2x := "" -}}
+  {{- if gt $w2 $w1 -}}
+    {{- $fallback2x = $res.Resize (printf "%dx q85" $w2) -}}
+  {{- end -}}
+
+  {{- /* JXL lookup relative to the owner page */ -}}
+  {{- $ext := path.Ext $res.Name -}}
+  {{- $baseName := strings.TrimSuffix $ext $res.Name -}}
+  {{- $jxl1x := $ownerPage.Resources.GetMatch (printf "%s-1x.jxl" $baseName) -}}
+  {{- $jxl2x := $ownerPage.Resources.GetMatch (printf "%s-2x.jxl" $baseName) -}}
+
+  <figure>
+    <picture>
+      {{- /* JXL source */ -}}
+      {{- if $jxl1x -}}
+        {{- $jxlSrcset := $jxl1x.RelPermalink -}}
+        {{- if and $jxl2x (gt $w2 $w1) -}}
+          {{- $jxlSrcset = printf "%s 1x, %s 2x" $jxl1x.RelPermalink $jxl2x.RelPermalink -}}
+        {{- end -}}
+        <source srcset="{{ $jxlSrcset }}" type="image/jxl">
+      {{- end -}}
+
+      {{- /* AVIF source */ -}}
+      {{- $avifSrcset := $avif1x.RelPermalink -}}
+      {{- if and $avif2x (gt $w2 $w1) -}}
+        {{- $avifSrcset = printf "%s 1x, %s 2x" $avif1x.RelPermalink $avif2x.RelPermalink -}}
+      {{- end -}}
+      <source srcset="{{ $avifSrcset }}" type="image/avif">
+
+      {{- /* WebP source */ -}}
+      {{- $webpSrcset := $webp1x.RelPermalink -}}
+      {{- if and $webp2x (gt $w2 $w1) -}}
+        {{- $webpSrcset = printf "%s 1x, %s 2x" $webp1x.RelPermalink $webp2x.RelPermalink -}}
+      {{- end -}}
+      <source srcset="{{ $webpSrcset }}" type="image/webp">
+
+      {{- /* Fallback source */ -}}
+      {{- $fallbackSrcset := $fallback1x.RelPermalink -}}
+      {{- if and $fallback2x (gt $w2 $w1) -}}
+        {{- $fallbackSrcset = printf "%s 1x, %s 2x" $fallback1x.RelPermalink $fallback2x.RelPermalink -}}
+      {{- end -}}
+      {{- $type := "image/jpeg" -}}
+      {{- if eq (lower $ext) ".png" -}}
+        {{- $type = "image/png" -}}
+      {{- end -}}
+      <source srcset="{{ $fallbackSrcset }}" type="{{ $type }}">
+
+      {{- /* Fallback img tag with layout shift prevention dimensions */ -}}
+      <img src="{{ $fallback1x.RelPermalink }}" width="{{ $fallback1x.Width }}" height="{{ $fallback1x.Height }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+    </picture>
+    {{- with $caption -}}
+      <figcaption>{{ . | markdownify }}</figcaption>
+    {{- end -}}
+  </figure>
+{{- else if or (hasPrefix $srcInput "http://") (hasPrefix $srcInput "https://") (hasPrefix $srcInput "/") -}}
+  <figure>
+    <img src="{{ $srcInput | safeURL }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+    {{- with $caption -}}
+      <figcaption>{{ . | markdownify }}</figcaption>
+    {{- end -}}
+  </figure>
+{{- else -}}
+  {{- warnf "Image resource not found for %q on page %q" $srcInput .Page.File.Path -}}
+{{- end -}}

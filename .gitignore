@@ -4,3 +4,7 @@ fonts/
 
 byg.service
 byg.timer
+
+# Pre-generated image formats
+*-1x.jxl
+*-2x.jxl
