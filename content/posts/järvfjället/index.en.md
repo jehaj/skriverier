@@ -14,7 +14,7 @@ I did exactly this and used silicone oil from FORCE. It was primarily intended f
 
 Below I go through the steps above with pictures. A small warning about the photos: I hadn't looked under my chair in years, so quite a bit of dust had accumulated.
 
-Step 1. Remove the seat by unscrewing the four screws. To access the screws the seat must be all the way back. You need an Allen key H5 to remove them; the chair came with one if you don't have it.
+Step 1. Remove the seat by unscrewing the four screws. To access the screws the seat must be all the way back. You need an Allen key H5 to remove them, it should have come with the chair.
 
 ![alt text](20260704_124614.jpg)
 
@@ -22,7 +22,7 @@ Step 2. Slide the seat holder all the way forward by pulling down the flat handl
 
 ![alt text](20260704_125251.jpg)
 
-Step 3. Lubricate them. Test that the chair no longer squeaks when you lean the backrest back. Be careful not to tip the chair or otherwise injure yourself — I nearly had an accident.
+Step 3. Lubricate them. Test that the chair no longer squeaks when you lean the backrest back. Be careful not to tip the chair or otherwise injure yourself, I nearly had an accident.
 
 Step 4. Put the seat holder back. This is done again by pulling down the flat handle. Watch your fingers, as a spring may pull it back.
 
